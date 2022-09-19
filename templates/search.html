@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+<!--    버튼 가운데로 오게 하려고 가져온 css -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+
+    <title>제로백 Multi flex</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+        font-family: 'Gowun Dodum', sans-serif;
+        }
+
+        img { display: block; margin: 0px auto; }
+
+        .mytitle {
+            width: 100%;
+            height: 250px;
+            color : white;
+
+            background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://search.pstatic.net/common/?autoRotate=true&quality=100&type=f640_380&src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20200901_179%2F1598960840117pcrDY_JPEG%2F-x9O6ZLTmB9qBNdtC5S7MM-D.jpg');
+            background-position: center;
+
+            background-repeat : no-repeat;
+/*<!--           no-repeat을 안하니까 계속 반복되서 안이쁨.-->*/
+
+                color: white;
+
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+            }
+
+
+
+        .mytitle > button {
+            width: 200px;
+            height: 50px;
+
+            background-color: transparent;
+            color: white;
+
+            border-radius: 50px;
+            border: 1px solid white;
+
+            margin-top: 10px;
+            }
+
+        .mytitle > button:hover {
+            border: 2px solid white;
+            }
+
+        .mycomment {
+            color: gray;
+            }
+
+        .mycards {
+            margin: 20px auto 0px auto;
+            width: 95%;
+            max-width: 1200px;
+            }
+
+        .mypost {
+            width: 95%;
+            max-width: 500px;
+            margin: 20px auto 0px auto;
+            padding: 20px;
+            box-shadow: 0px 0px 3px 0px gray;
+
+            display: none;
+            }
+
+        .mybtns {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+
+            margin-top: 20px;
+            }
+
+        .mybtns > button {
+        margin-right: 10px;
+        }
+
+    </style>
+    <script>
+        $(document).ready(function(){
+        });
+
+
+
+        function posting() {
+            let ID = $('#ID').val()
+
+        $.ajax({
+            type: 'POST',
+            url: '/movie',
+            data: {ID_give : ID},
+            success: function (response) {
+                alert(response['msg'])
+                window.location.reload()
+            }
+        });
+        }
+
+        function open_box(){
+            $('#post-box').show()
+        }
+
+        function close_box(){
+            $('#post-box').hide()
+        }
+
+    </script>
+</head>
+<body>
+    <div class="mytitle mb-3">
+        <h1>제로백 Multi flex</h1>
+        <button onclick="open_box()">로그인</button>
+    </div>
+    <div class="mypost mb-3" id="post-box">
+        <div class="form-floating mb-3">
+            <input id="ID" type="text" class="form-control" >
+    <!--        type 선택자 -> 한페이지에 모든 대상을 삼을때  type 선택자 -->
+    <!--        placeholer 지워줌 이 선택자는 회색글씨로 흐릿하게 보여줌 -->
+            <label>아이디</label>
+        </div>
+    <!--            id 넣는 입력창-->
+        <div class="form-floating mb-3">
+            <input id="passWord" type="password" class="form-control" >
+<!--            id랑 type/ passowrd 두개 다른거 잘 보샘-->
+            <label>비밀번호</label>
+        </div>
+    <!--            비밀번호 넣는 입력창-->
+
+        <div class="mybtns">
+            <button onclick="posting()" type="button" class="btn btn-dark">로그인</button>
+            <button onclick="close_box()" type="button" class="btn btn-outline-dark">닫기</button>
+        </div>
+    </div>
+
+
+    <div class="btn-group d-flex justify-content-center mb-3" role="group" aria-label="Basic outlined example">
+        <button type="button" class="btn btn-outline-dark btn-lg mb-3">홈</button>
+        <button type="button" class="btn btn-outline-dark btn-lg mb-3" onclick="location.href='http://localhost:8080/update'">신간</button>
+        <button type="button" class="btn btn-outline-dark btn-lg mb-3" onclick="location.href='http://localhost:8080/search'">만화책 수량</button>
+        <button type="button" class="btn btn-outline-dark btn-lg mb-3">자유게시판</button>
+    </div>
+
+<div class="wrap">
+            <div id="cards-box" class="row row-cols-1 row-cols-md-4 g-4 border-4"  >
+                <div class="col">
+                    <div class="card" style ="cursor: pointer" onclick="location.href='http://localhost:8080/manga_individual_page'">
+                        <img src="https://w.namu.la/s/d6540afc1256221b6af0a494b6898aeabdc3794b4e3244d694a2c84d7f8175fb2d6a71212f4ef20ed0a8b7a60c5f6ae083f27e87f0da63b058e2b7f469083a8d4816ca0b96d41d3ed941860d0227dc9da26d0f57b10cd9a97f3ec6728d38ad746ea312f8f8af18e7546d23a3665069ec"
+                             class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">SPYxFAMILY 스파이 패밀리</h5>
+                            <p class="card-text">극비 임무를 위해 정신과 의사 로이드로 위장한 웨스탈리스 정보국 소속 스파이 황혼. 작전상 가족이 필요했던 그는 고아 아냐가 초능력자라는
+                                                사실을 꿈에도 모른 채 그녀를 딸로 입양한다.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card">
+                        <img src="https://images.justwatch.com/poster/242881286/s592/jusulhoejeon"
+                             class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">주술회전</h5>
+                            <p class="card-text">소년은 싸운다, '올바른 죽음'을 위해.
+                                                쓰라린 고통, 후회, 치욕.
+                                                인간으로부터 흘러나온 부정적인 감정이 저주로 변해 일상에 숨어든다.
+                                                저주는 세상에 만연한 재앙의 근원이며, 최악의 경우 인간을 죽음으로 이끈다.
+                                                그리고 저주는 저주로밖에 없앨 수 없다.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card">
+                        <img src="https://kkukowiki.kr/images/c/ce/%ED%9E%88%EC%96%B4%EB%A1%9C%EC%95%84%EC%B9%B4%EB%8D%B0%EB%AF%B8%EC%95%842.jpg"
+                             class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">나의 히어로 아카데미아</h5>
+                            <p class="card-text">'개성'이라는 초능력을 갖고 태어나는 게 당연한 세계, 현재 인류 8할이 개성을 소유하고 있다.
+                                초능력자들이 많아짐에 따라 과거 만화에서나 나오던 히어로라는 직업이 각광받게 되고 주인공 미도리야 이즈쿠도 히어로를 동경하고 있다.
+                                하지만 무개성인 이즈쿠는 히어로가 될 수 없었고, 주변에서도 포기하란 말만 듣는다.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card">
+                        <img src="https://postfiles.pstatic.net/MjAyMTEwMjdfMTYz/MDAxNjM1MzI3ODQ0Mzk4.FyZPF3TaVvzDrMipRvSlTo5ej5rHzJUFAuboORB5C90g.zvCaJ-jqHmNUF3Xr0EfNiSo68ItKM1DGcUQ_VGXOwf4g.JPEG.toxication_h/IMG_5333.jpg?type=w773"
+                             class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">도쿄 리벤져스</h5>
+                            <p class="card-text">중학교 시절 사귄, 처음이자 마지막 여자 친구 히나타가
+                                                경찰도 감당할 수 없는 불량 연합 '도쿄 만지회'에 의해 살해되었다─.「중학교 때가 최고 전성기」였던 전 불량배 타케미치가
+                                                전 여친의 죽음을 계기로 12년 전 중학시절로 타임슬립!!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+</body>
+</html>
